@@ -32,13 +32,17 @@ void fdx_load(uint8_t addr)
 }
 
 /**
- * ADD addr - Soma
+ * ADD addr - Soma (signed)
  *
  * Soma AC com a palavra em addr e coloca o resultado em AC
  */
 void fdx_add(uint8_t addr)
 {
-    fdx_AC += fdx_memory[addr];
+    static int8_t signed_AC;
+    signed_AC = (int8_t) fdx_AC;
+
+    signed_AC += (int8_t) fdx_memory[addr];
+    fdx_AC = (uint8_t) signed_AC;
 }
 
 // TODO: documentar estas instruções
@@ -68,7 +72,7 @@ void fdx_jump(uint8_t addr)
 
 void fdx_jump_on_negative(uint8_t addr)
 {
-    fdx_state = (fdx_AC < 0) ? fdx_N : 0;
+    fdx_state = (((int8_t) fdx_AC) < 0) ? fdx_N : 0;
     if (fdx_state == fdx_N) fdx_PC = addr;
 }
 
@@ -87,5 +91,9 @@ void fdx_halt()
 
 void fdx_subtraction(uint8_t addr)
 {
-    fdx_AC -= fdx_memory[addr];
+    static int8_t signed_AC;
+    signed_AC = (int8_t) fdx_AC;
+
+    signed_AC -= (int8_t) fdx_memory[addr];
+    fdx_AC = (uint8_t) signed_AC;
 }
