@@ -13,8 +13,8 @@ minha graduação na `Universidade Federal de Sergipe`.
 
 # Autores
 
-Felipe Oliveira Carvalho
-Diego Andrade
+ - Felipe Oliveira Carvalho
+ - Diego Andrade
 
 
 [1] WEBER, R. F. Fundamentos de Arquitetura de Computadores. 2. Ed. Porto
