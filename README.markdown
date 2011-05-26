@@ -7,9 +7,13 @@ encontrada em [1].
 O FD-X foi meu trabalho na disciplina `Arquitetura de Computadores` durante
 minha graduação na `Universidade Federal de Sergipe`.
 
-## Extensões do FD-X
+## Extensões
 
-- Subtração - A instrução SUB
+Instruções que não são definidas na arquitetura Neander.
+
+    SUB     Subtração (signed)
+    ADDU    Soma (unsigned)
+    SUBU    Subtração (unsigned)
 
 # Autores
 

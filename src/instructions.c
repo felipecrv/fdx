@@ -89,6 +89,9 @@ void fdx_halt()
 
 // Extensões
 
+/**
+ * SUB - Subtração (signed)
+ */
 void fdx_subtraction(uint8_t addr)
 {
     static int8_t signed_AC;
@@ -96,4 +99,20 @@ void fdx_subtraction(uint8_t addr)
 
     signed_AC -= (int8_t) fdx_memory[addr];
     fdx_AC = (uint8_t) signed_AC;
+}
+
+/**
+ * ADDU - Soma (unsigned)
+ */
+void fdx_add_unsigned(uint8_t addr)
+{
+    fdx_AC += fdx_memory[addr];
+}
+
+/**
+ * SUBU - Subtração (unsigned)
+ */
+void fdx_subtraction_unsigned(uint8_t addr)
+{
+    fdx_AC -= fdx_memory[addr];
 }
