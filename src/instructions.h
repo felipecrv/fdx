@@ -15,5 +15,8 @@ void fdx_halt();
 
 // Extensões
 void fdx_subtraction(uint8_t);
+void fdx_add_unsigned(uint8_t);
+void fdx_subtraction_unsigned(uint8_t);
+void fdx_load_immediate(uint8_t);
 
 #endif /*INSTRUCTIONS_H_*/

@@ -116,3 +116,13 @@ void fdx_subtraction_unsigned(uint8_t addr)
 {
     fdx_AC -= fdx_memory[addr];
 }
+
+/**
+ * LDI - Load Immediate
+ *
+ * Carrega o valor do operando no acumulador AC
+ */
+void fdx_load_immediate(uint8_t value)
+{
+    fdx_AC = value;
+}

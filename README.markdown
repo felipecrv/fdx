@@ -14,6 +14,7 @@ Instruções que não são definidas na arquitetura Neander.
     SUB     Subtração (signed)
     ADDU    Soma (unsigned)
     SUBU    Subtração (unsigned)
+    LDI     Load Immediate
 
 # Autores
 
