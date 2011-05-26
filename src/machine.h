@@ -21,6 +21,6 @@ extern uint8_t fdx_PC;
 extern uint8_t fdx_state;
 
 // Os dois possíveis estados de fdx_state
-extern const uint8_t fdx_N = 1, fdx_Z = 0;
+const uint8_t fdx_N = 2, fdx_Z = 1;
 
 #endif /*MACHINE_H_*/
