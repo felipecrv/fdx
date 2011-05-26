@@ -7,9 +7,14 @@ encontrada em [1].
 O FD-X foi meu trabalho na disciplina `Arquitetura de Computadores` durante
 minha graduação na `Universidade Federal de Sergipe`.
 
-# Extensões do FD-X
+## Extensões do FD-X
 
 - Subtração - A instrução SUB
+
+# Autores
+
+Felipe Oliveira Carvalho
+Diego Andrade
 
 
 [1] WEBER, R. F. Fundamentos de Arquitetura de Computadores. 2. Ed. Porto
