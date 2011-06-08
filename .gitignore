@@ -1,3 +1,8 @@
 *.swp
 *.swo
 *.o
+*.s
+tags
+a.out
+fdx
+
