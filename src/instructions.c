@@ -3,6 +3,36 @@
 #include "machine.h"
 #include "instructions.h"
 
+struct fdx_instruction_table_entry
+    fdx_instruction_table[FDX_INSTRUCTION_SET_SIZE];
+
+#define OP(OPCODE, FN, LEN) \
+    fdx_instruction_table[(OPCODE)].fn = &(FN); \
+    fdx_instruction_table[(OPCODE)].length = (LEN);
+
+void init_fdx_instruction_table()
+{
+    // opcode = 5 bits
+    OP(0x00, fdx_nop, 1)
+    OP(0x01, fdx_store, 2)
+    OP(0x02, fdx_load, 2)
+    OP(0x03, fdx_add, 2)
+    OP(0x04, fdx_or, 2)
+    OP(0x05, fdx_and, 2)
+    OP(0x06, fdx_not, 1)
+
+    OP(0x07, fdx_subtraction, 2) // Extensão
+
+    OP(0x08, fdx_jump, 2)
+    OP(0x09, fdx_jump_on_negative, 2)
+    OP(0x0A, fdx_jump_on_zero, 2)
+
+    // Extensões
+    //OP(0x0B, ..
+
+    OP(0x1F, fdx_halt, 1)
+}
+
 /**
  * NOP - Nenhuma operação
  */

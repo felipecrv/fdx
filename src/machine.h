@@ -21,6 +21,13 @@ extern uint8_t fdx_PC;
 extern uint8_t fdx_state;
 
 // Os dois possíveis estados de fdx_state
-const uint8_t fdx_N = 2, fdx_Z = 1;
+#define fdx_N 2
+#define fdx_Z 1
+
+// Instruction register
+extern uint8_t fdx_IR;
+
+// Operando (usado em instruções de 2 bytes)
+extern uint8_t fdx_operand;
 
 #endif /*MACHINE_H_*/
