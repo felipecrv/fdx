@@ -120,6 +120,9 @@ void fdx_not()
 void fdx_jump(uint8_t addr)
 {
     fdx_PC = addr;
+#ifdef DEBUG
+    printf("Jump to: %hhu\n", fdx_PC);
+#endif
 }
 
 void fdx_jump_on_negative(uint8_t addr)
@@ -127,6 +130,9 @@ void fdx_jump_on_negative(uint8_t addr)
     fdx_state = (((int8_t) fdx_AC) < 0) ? fdx_N : 0;
     if (fdx_state == fdx_N) {
         fdx_PC = addr;
+#ifdef DEBUG
+        printf("Jump to: %hhu\n", fdx_PC);
+#endif
     }
 }
 
@@ -135,6 +141,9 @@ void fdx_jump_on_zero(uint8_t addr)
     fdx_state = (fdx_AC == 0) ? fdx_Z : 0;
     if (fdx_state == fdx_Z) {
         fdx_PC = addr;
+#ifdef DEBUG
+        printf("jump to %hhu\n", fdx_PC);
+#endif
     }
 }
 

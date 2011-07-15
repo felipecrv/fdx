@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#ifdef DEBUG
 #include <stdio.h>
+#endif
 #include <stdint.h>
 #include <string.h>
 #include "machine.h"
@@ -29,6 +31,9 @@ static void fdx_fetch_instruction()
 
 static void fdx_execute_instruction()
 {
+#ifdef DEBUG
+    printf(" Opcode: %hhu\n", fdx_IR);
+#endif
     if (fdx_instruction_length() == 2) {
         (*((two_byte_instruction_fn_t) 
            fdx_instruction_table[fdx_IR >> 3].fn))(fdx_operand);
