@@ -51,7 +51,7 @@ void fdx_execution_loop()
         // Carrega a instrução no registrador de instrução.
         fdx_fetch_instruction();
 
-        printf("%d\n", fdx_AC);
+        printf("AC: %hhu\n", fdx_AC);
 
         // A próxima instrução será executada na próxima iteração, a menos que
         // alguma instrução de jump seja executada.

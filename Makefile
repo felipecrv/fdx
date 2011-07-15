@@ -18,12 +18,11 @@ all:
 	gcc $(CC_ARGS) $(FDX_ASM_OBJS) -o fdx-asm
 
 clean:
-	rm $(OBJS)
-	rm $(FDX_ASM_OBJS) 
+	rm $(OBJS) $(FDX_ASM_OBJS)
 	rm fdx
 	rm fdx-asm
 	rm tests
 
-test: tests
+test:
 	gcc -c $(CC_ARGS) -Wall $(FILES)
 	gcc $(TEST_OBJS) -o tests && ./tests

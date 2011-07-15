@@ -12,8 +12,13 @@
     hashmap_set(&mnemonics, (M), \
         &opcode_pool[opcode_pool_push_pos++])
 
-#define FATAL(MSG) printf("error: %zu: %s\n", line_number, (MSG)); \
+#define FATAL(MSG) fprintf(stderr, "error: %zu: %s\n", line_number, (MSG)); \
     exit(1);
+
+#define ADD_BYTE(B) if (ins_addr > 254) {\
+        FATAL("Too many instructions")\
+    }\
+    output_prog[ins_addr++] = (B);
 
 #define MAXLINESIZE 2048
 #define MAX_LABELS 512
@@ -23,6 +28,9 @@ static struct hashmap mnemonics, labels;
 
 static uint8_t label_pool[MAX_LABELS], opcode_pool[2<<5];
 size_t label_pool_push_pos, opcode_pool_push_pos;
+
+char branches[MAX_LABELS][64];
+uint8_t branch_to_label_on_addr[256], branch_idx;
 
 static void remove_comments(char *line, size_t *len)
 {
@@ -51,6 +59,7 @@ static void assembler_init(void)
 
     label_pool_push_pos = 0;
     opcode_pool_push_pos = 0;
+    branch_idx = 0;
 
     if (first_time) {
         init_fdx_instruction_table();
@@ -87,26 +96,29 @@ static void assembler_parse_argument(
         const char *text,
         char *label,
         uint8_t *addr_arg,
-            char **error_message)
+        char **error_message)
 {
     static char expected_addr[] = "Address expected";
     static char expected_addr_or_label[] = "Label or address expected";
 
+    char *err = NULL;
+
     if (addr_arg) {
         if (sscanf(text, "%hhu", addr_arg) < 1) {
-            *error_message = expected_addr;
-            return;
+            err = expected_addr;
         }
     }
 
     if (label) {
-        if (sscanf(text, "%64s", label) <= 0) {
-            *error_message = expected_addr_or_label;
-            return;
+        if (sscanf(text, "%64s", label) < 1) {
+            label[0] = '\0';
+            err = expected_addr_or_label;
+        } else {
+            err = NULL;
         }
     }
 
-    *error_message = NULL;
+    *error_message = err;
 }
 
 
@@ -131,7 +143,7 @@ void fdx_assemble(FILE *input_file, uint8_t *output_prog, int *prog_size)
     //                branch)
     //                Adicione o argumento ao programa
     //                Incremente o endereço de instrução
-    //              
+    //
     //            Se a instrução for um branch espere por uma label ou endereço
     //
     // Resolve todas as intruções de branch
@@ -140,7 +152,7 @@ void fdx_assemble(FILE *input_file, uint8_t *output_prog, int *prog_size)
     char *read_status, token[64], label[64], *label_ptr;
     char *error_message;
     size_t len, line_number = 1, ins_addr = 0;
-    uint8_t *opcode, arg_addr;
+    uint8_t *opcode, arg_addr, *branch_dest_addr, i;
 
     assembler_init();
 
@@ -174,7 +186,7 @@ void fdx_assemble(FILE *input_file, uint8_t *output_prog, int *prog_size)
                 // Eh uma uma instrução válida?
                 if ((opcode = (uint8_t *) hashmap_lookup(&mnemonics, token))) {
                     // Adiciona a instrução ao binário
-                    output_prog[ins_addr++] = (*opcode) << 3;
+                    ADD_BYTE((*opcode) << 3)
 
                     if (fdx_instruction_table[*opcode].length == 1) {
                         // Se a instrução tem apenas um byte o resto da linha tem
@@ -198,17 +210,35 @@ void fdx_assemble(FILE *input_file, uint8_t *output_prog, int *prog_size)
                             FATAL(error_message)
                         }
 
-                        // TODO: tratar labels
-
+                        // Leu um label?
+                        if (label_ptr && label_ptr[0]) {
+                            strcpy(branches[branch_idx], label_ptr);
+                            branch_to_label_on_addr[branch_idx] = ins_addr;
+                            branch_idx++;
+                            // Esse 0 será substituído pelo endereço
+                            // correspondente ao label no final da compilação
+                            ADD_BYTE(0)
+                        }
 
                         // Adiciona o argumento ao programa
-                        output_prog[ins_addr++] = arg_addr;
+                        ADD_BYTE(arg_addr)
                     }
                 } else {
                     FATAL("Invalid instruction")
                 }
             }
         }
+    }
+
+    // Resolvendo todos os branches
+    for (i = 0; i < branch_idx; i++) {
+        branch_dest_addr = (uint8_t *) hashmap_lookup(&labels, branches[i]);
+
+        if (!branch_dest_addr) {
+            fprintf(stderr, "Label not found: %s\n", branches[i]);
+            exit(1);
+        }
+        output_prog[branch_to_label_on_addr[i]] = *branch_dest_addr;
     }
 
     *prog_size = ins_addr;
