@@ -228,10 +228,9 @@ void fdx_assemble(FILE *input_file, uint8_t *output_prog, int *prog_size)
                             // Esse 0 será substituído pelo endereço
                             // correspondente ao label no final da compilação
                             ADD_BYTE(0)
+                        } else {
+                            ADD_BYTE(arg_addr)
                         }
-
-                        // Adiciona o argumento ao programa
-                        ADD_BYTE(arg_addr)
                     }
                 } else {
                     FATAL("Invalid instruction")
