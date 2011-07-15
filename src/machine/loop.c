@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include "machine.h"
@@ -47,6 +48,8 @@ void fdx_execution_loop()
     for (;;) {
         // Carrega a instrução no registrador de instrução.
         fdx_fetch_instruction();
+
+        printf("%d\n", fdx_AC);
 
         // A próxima instrução será executada na próxima iteração, a menos que
         // alguma instrução de jump seja executada.
