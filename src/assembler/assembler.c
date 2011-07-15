@@ -119,7 +119,7 @@ static void assembler_parse_argument(
         }
     }
 
-    if (label) {
+    if (err && label) {
         if (sscanf(text, "%64s", label) < 1) {
             label[0] = '\0';
             err = expected_addr_or_label;
