@@ -28,4 +28,5 @@ end:
 ; Dobra AC (que é 5, pois houveram 4 incrementos a partir de 1)
 STA 128 ; Salva AC na pos 128
 ADD 128
+MDMP ; Memory dump
 HLT

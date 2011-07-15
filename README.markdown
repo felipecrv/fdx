@@ -12,9 +12,14 @@ minha graduação na `Universidade Federal de Sergipe`.
 Instruções que não são definidas na arquitetura Neander.
 
     SUB     Subtração (signed)
+    LDI     Load Immediate
+    SHL     Shift Left
+    SHR     Shift Right
     ADDU    Soma (unsigned)
     SUBU    Subtração (unsigned)
-    LDI     Load Immediate
+    IN      Entrada
+    OUT     Saída
+    MDMP    Memory Dump
 
 # Autores
 

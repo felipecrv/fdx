@@ -76,8 +76,18 @@ static void assembler_init(void)
         MNMNC("SUB", 0x07);
 
         MNMNC("JMP", 0x08);
-        MNMNC("JN", 0x09);
+        MNMNC("JN",  0x09);
         MNMNC("JZ",  0x0A);
+
+        MNMNC("LDI", 0x0B);
+        MNMNC("SHL", 0x0C);
+        MNMNC("SHR", 0x0D);
+        MNMNC("ADDU", 0x0E);
+        MNMNC("SUBU", 0x0F);
+        MNMNC("IN",  0x10);
+        MNMNC("OUT", 0x11);
+        MNMNC("MDMP", 0x12);
+
 
         MNMNC("HLT", 0x1F);
 

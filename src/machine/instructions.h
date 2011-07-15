@@ -15,6 +15,14 @@ void fdx_not();
 void fdx_jump(uint8_t);
 void fdx_jump_on_negative(uint8_t);
 void fdx_jump_on_zero(uint8_t);
+void fdx_load_immediate(uint8_t);
+void fdx_shift_left(uint8_t);
+void fdx_shift_right(uint8_t);
+void fdx_add_unsigned(uint8_t);
+void fdx_subtraction_unsigned(uint8_t);
+void fdx_input();
+void fdx_output();
+void fdx_memory_dump();
 void fdx_halt();
 
 // Extensões

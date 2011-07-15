@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include "machine.h"
 #include "instructions.h"
@@ -28,7 +29,14 @@ void init_fdx_instruction_table()
     OP(0x0A, fdx_jump_on_zero, 2)
 
     // Extensões
-    //OP(0x0B, ..
+    OP(0x0B, fdx_load_immediate, 2);
+    OP(0x0C, fdx_shift_left, 2);
+    OP(0x0D, fdx_shift_right, 2);
+    OP(0x0E, fdx_add_unsigned, 2);
+    OP(0x0F, fdx_subtraction_unsigned, 2);
+    OP(0x10, fdx_input, 1);
+    OP(0x11, fdx_output, 1);
+    OP(0x12, fdx_memory_dump, 1);
 
     OP(0x1F, fdx_halt, 1)
 }
@@ -146,6 +154,26 @@ void fdx_subtraction(uint8_t addr)
 }
 
 /**
+ * LDI - Load Immediate
+ *
+ * Carrega o valor do operando no acumulador AC
+ */
+void fdx_load_immediate(uint8_t value)
+{
+    fdx_AC = value;
+}
+
+void fdx_shift_left(uint8_t addr)
+{
+    fdx_AC = fdx_AC << fdx_memory[addr];
+}
+
+void fdx_shift_right(uint8_t addr)
+{
+    fdx_AC = fdx_AC >> fdx_memory[addr];
+}
+
+/**
  * ADDU - Soma (unsigned)
  */
 void fdx_add_unsigned(uint8_t addr)
@@ -161,12 +189,28 @@ void fdx_subtraction_unsigned(uint8_t addr)
     fdx_AC -= fdx_memory[addr];
 }
 
-/**
- * LDI - Load Immediate
- *
- * Carrega o valor do operando no acumulador AC
- */
-void fdx_load_immediate(uint8_t value)
+void fdx_input()
 {
-    fdx_AC = value;
+    printf(" IN: ");
+    scanf("%hhu", &fdx_AC);
 }
+
+void fdx_output()
+{
+    printf("OUT: %hhu\n", fdx_AC);
+}
+
+void fdx_memory_dump()
+{
+    int i, j;
+    for (i = 0; i < 8; i++) {
+        printf("%3d: ", i * 32);
+        for (j = 0; j < 32; j += 2) {
+            printf("%02hhx%02hhx ",
+                    fdx_memory[i * 32 + j],
+                    fdx_memory[i * 32 + j + 1]);
+        }
+        putchar('\n');
+    }
+}
+
