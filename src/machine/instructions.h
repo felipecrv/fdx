@@ -23,6 +23,9 @@ void fdx_add_unsigned(uint8_t);
 void fdx_subtraction_unsigned(uint8_t);
 void fdx_load_immediate(uint8_t);
 
+int fdx_is_branch_instruction(uint8_t);
+int fdx_instruction_require_address(uint8_t);
+
 // Definindo tipos de ponteiro de funções para as instruções
 typedef void (*two_byte_instruction_fn_t)(uint8_t);
 typedef void (*one_byte_instruction_fn_t)(void);

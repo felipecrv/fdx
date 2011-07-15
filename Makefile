@@ -10,10 +10,12 @@ FDX_ASM_OBJS=machine.o loop.o instructions.o assembler.o fdx-asm.o hashmap.o
 
 TEST_OBJS=tests.o hashmap.o
 
+CC_ARGS=-g -Wall -std=c99 -pedantic
+
 all:
-	gcc -c -g $(FILES)
-	gcc $(OBJS) -o fdx
-	gcc -g $(FDX_ASM_OBJS) -o fdx-asm
+	gcc -c $(CC_ARGS) $(FILES)
+	gcc $(CC_ARGS) $(OBJS) -o fdx
+	gcc $(CC_ARGS) $(FDX_ASM_OBJS) -o fdx-asm
 
 clean:
 	rm $(OBJS)
@@ -22,6 +24,6 @@ clean:
 	rm fdx-asm
 	rm tests
 
-test:
-	gcc -c -g $(FILES)
+test: tests
+	gcc -c $(CC_ARGS) -Wall $(FILES)
 	gcc $(TEST_OBJS) -o tests && ./tests

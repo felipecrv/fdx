@@ -7,7 +7,7 @@ struct fdx_instruction_table_entry
     fdx_instruction_table[FDX_INSTRUCTION_SET_SIZE];
 
 #define OP(OPCODE, FN, LEN) \
-    fdx_instruction_table[(OPCODE)].fn = &(FN); \
+    fdx_instruction_table[(OPCODE)].fn = (void *) &(FN); \
     fdx_instruction_table[(OPCODE)].length = (LEN);
 
 void init_fdx_instruction_table()
@@ -31,6 +31,20 @@ void init_fdx_instruction_table()
     //OP(0x0B, ..
 
     OP(0x1F, fdx_halt, 1)
+}
+
+int fdx_is_branch_instruction(uint8_t opcode)
+{
+    return opcode >= 0x08 && opcode <= 0x0A;
+}
+
+/**
+ * Retorna true se a instrução recebe um endereço como parâmetro.
+ */
+int fdx_instruction_require_address(uint8_t opcode)
+{
+    // Todas as intruções de 2 bytes recebem um endereço como parâmetro
+    return fdx_instruction_table[opcode].length == 2;
 }
 
 /**

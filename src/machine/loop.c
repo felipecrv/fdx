@@ -6,6 +6,10 @@
 #include "instructions.h"
 #include "loop.h"
 
+static void fdx_fetch_instruction();
+static void fdx_execute_instruction();
+static int fdx_instruction_length();
+
 /**
  * Carrega o programa na memória.
  */
@@ -19,12 +23,12 @@ static void fdx_fetch_instruction()
     fdx_IR = fdx_memory[fdx_PC];
     // Carregamos o próximo byte (que a depender da instrução pode ser um
     // operando).
-    fdx_operand = fdx_memory[fdx_PC + 1];
+    if (fdx_PC <= 253)
+        fdx_operand = fdx_memory[fdx_PC + 1];
 }
 
 static void fdx_execute_instruction()
 {
-
     if (fdx_instruction_length() == 2) {
         (*((two_byte_instruction_fn_t) 
            fdx_instruction_table[fdx_IR >> 3].fn))(fdx_operand);
@@ -41,8 +45,6 @@ static int fdx_instruction_length()
 
 void fdx_execution_loop()
 {
-    int j, i = 20;
-
     // A próxima instrução está na posição 0
     fdx_PC = 0;
     for (;;) {

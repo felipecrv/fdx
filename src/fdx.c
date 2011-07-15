@@ -4,6 +4,8 @@
 #include <string.h>
 #include <errno.h>
 #include "machine/machine.h"
+#include "machine/loop.h"
+#include "machine/instructions.h"
 
 static char usage[] = "Usage: %s PROGRAM_FILE\n";
 
