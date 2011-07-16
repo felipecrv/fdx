@@ -18,9 +18,9 @@ OUT
 ADDU 129 ; AC = 4 + 2
 SUBU 254 ; AC = AC - 1 = 5
 OUT
-STA 130 ; 130 recebe 3
+STA 130 ; mem[130] = 3
 
-; 131 recebe entrada do usuário
+; mem[131] recebe entrada do usuário
 IN
 STA 131
 LDA 131
@@ -30,6 +30,7 @@ MDMP
 HLT
 
 ; Saída esperada:
+;
 ; OUT: 4
 ; OUT: 2
 ; OUT: 5

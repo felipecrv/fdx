@@ -1,38 +1,38 @@
-; Esse exemplo tem vários branches: a execução faz ium zig-zag
+; Esse exemplo tem vários branches: a execução faz um "zig-zag".
 
-LDA 1 ; Coloca 1 en AC (note que 1 é o endereço, mas como 1 está na posição 1...)
+LDI 1 ; Coloca 1 em AC
 OUT
 
+; Primeiro branch
 JMP lbl_z
 
 ; 2nd
 lbl_a:
-ADD 1 ; Incrementa em 1
-OUT
-JMP lbl_x
+ ADD 1 ; Incrementa em 1
+ OUT
+ JMP lbl_x
 
 ; 4th
 lbl_b:
-ADD 1
-OUT
-JMP end ; termina
+ ADD 1
+ OUT
+ JMP end ; Termina
 
 ; 3rd
 lbl_x:
-ADD 1
-OUT
-JMP lbl_b
+ ADD 1
+ OUT
+ JMP lbl_b
 
 ; 1st
 lbl_z:
-ADD 1
-OUT
-JMP lbl_a
+ ADD 1
+ OUT
+ JMP lbl_a
 
 end:
-; Dobra AC (que é 5, pois houveram 4 incrementos a partir de 1)
-STA 128 ; Salva AC na pos 128
-ADD 128
-OUT
-MDMP ; Memory dump
-HLT
+ STA 128 ; Salva AC na pos 128
+ ADD 128 ; Dobra AC (que é 5, pois houveram 4 incrementos a partir de 1)
+ OUT
+ MDMP ; Memory dump
+ HLT
