@@ -1,7 +1,7 @@
 #ifndef INSTRUCTIONS_H_
 #define INSTRUCTIONS_H_
 
-#define FDX_INSTRUCTION_SET_SIZE 16
+#define FDX_INSTRUCTION_SET_SIZE 20
 
 void init_fdx_instruction_table();
 

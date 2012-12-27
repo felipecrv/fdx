@@ -44,7 +44,9 @@ int main(int argc, char* argv[])
         open_file("a.out", "w") : open_file(argv[2], "w");
 
     // Compila as instruções e gera um programa de tamanho prog_size
-    fdx_assemble(input_file, output_prog, &prog_size);
+    if (!fdx_assemble(input_file, output_prog, &prog_size)) {
+        return EXIT_FAILURE;
+    }
 
     // Escreve o output_prog no arquivo de saida
     fwrite(output_prog, sizeof(uint8_t), prog_size, output_file);
